@@ -1,10 +1,10 @@
-# that_movie_app
+# That Movie App
 
-A new Flutter project.
+A fresh Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a starting point for a Flutter application. It consumes [The Movie Database API](https://developers.themoviedb.org/3/getting-started/introduction).
 
 A few resources to get you started if this is your first Flutter project:
 
