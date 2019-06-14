@@ -1,5 +1,5 @@
 class Movies {
-  List<Movie> items = new List<dynamic>();
+  List<Movie> items = new List();
 
   Movies();
 

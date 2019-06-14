@@ -1,3 +1,4 @@
+import 'package:that_movie_app/src/providers/movie_provider.dart';
 import 'package:that_movie_app/src/widgets/card_swiper.dart';
 
 import 'dart:io' show Platform;
@@ -31,6 +32,9 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _cardSwiper() {
+    final movieProvider = new MovieProvider();
+    movieProvider.getNowPlaying();
+
     return CardSwiper(movies: [1, 2, 3, 4, 5]);
   }
 }
