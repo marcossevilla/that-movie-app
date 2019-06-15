@@ -24,8 +24,10 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
         child: Container(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               _cardSwiper(),
+              _footer(context),
             ],
           ),
         ),
@@ -51,6 +53,24 @@ class HomePage extends StatelessWidget {
           );
         }
       },
+    );
+  }
+
+  Widget _footer(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child: Column(
+        children: <Widget>[
+          Text('Popular', style: Theme.of(context).textTheme.subhead),
+          FutureBuilder(
+            future: movieProvider.getPopular(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              print(snapshot.data);
+              return Container();
+            },
+          ),
+        ],
+      ),
     );
   }
 }
