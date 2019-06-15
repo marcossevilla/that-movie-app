@@ -62,4 +62,12 @@ class Movie {
     overview = json['overview'];
     releaseDate = json['release_date'];
   }
+
+  getPosterImage() {
+    if (posterPath == null) {
+      return 'https://imgplaceholder.com/420x320/ff7f7f/333333/fa-image';
+    } else {
+      return 'https://image.tmdb.org/t/p/w1280/$posterPath';
+    }
+  }
 }

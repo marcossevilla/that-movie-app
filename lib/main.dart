@@ -10,6 +10,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'That Movies App',
+      theme: new ThemeData(
+          primarySwatch: Colors.red,
+          primaryColor: Colors.red,
+          primaryColorDark: Colors.redAccent),
       initialRoute: '/',
       routes: {
         '/': (BuildContext context) => HomePage(),

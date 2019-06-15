@@ -5,13 +5,15 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
+  final movieProvider = new MovieProvider();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Movies on Theaters'),
         centerTitle: Platform.isAndroid ? false : true,
-        backgroundColor: Colors.redAccent[700],
+        // backgroundColor: Colors.redAccent[700],
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
@@ -32,9 +34,23 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _cardSwiper() {
-    final movieProvider = new MovieProvider();
-    movieProvider.getNowPlaying();
-
-    return CardSwiper(movies: [1, 2, 3, 4, 5]);
+    return FutureBuilder(
+      future: movieProvider.getNowPlaying(),
+      builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+        if (snapshot.hasData) {
+          return CardSwiper(movies: snapshot.data);
+        } else {
+          return Container(
+            height: 400.0,
+            child: Center(
+              child: CircularProgressIndicator(
+                value: null,
+                strokeWidth: 5.0,
+              ),
+            ),
+          );
+        }
+      },
+    );
   }
 }
