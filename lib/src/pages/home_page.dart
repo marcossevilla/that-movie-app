@@ -68,7 +68,7 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(left: 25.0),
             child: Text('Popular', style: Theme.of(context).textTheme.subhead),
           ),
-          SizedBox(height: 25.0),
+          SizedBox(height: 15.0),
           FutureBuilder(
             future: movieProvider.getPopular(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
