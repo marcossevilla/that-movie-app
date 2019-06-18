@@ -70,4 +70,12 @@ class Movie {
       return 'https://image.tmdb.org/t/p/w1280/$posterPath';
     }
   }
+
+  getBackgroundImage() {
+    if (backdropPath == null) {
+      return 'https://imgplaceholder.com/420x320/ff7f7f/333333/fa-image';
+    } else {
+      return 'https://image.tmdb.org/t/p/w1280/$backdropPath';
+    }
+  }
 }
