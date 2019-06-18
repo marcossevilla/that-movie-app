@@ -26,38 +26,65 @@ class MovieHorizontal extends StatelessWidget {
 
     return Container(
       height: _screenSize.height * 0.27,
-      child: PageView(
+      child: PageView.builder(
         pageSnapping: false,
         controller: _pageController,
-        children: _cards(context),
+        // children: _cards(context),
+        itemCount: movies.length,
+        itemBuilder: (context, i) => _card(context, movies[i]),
       ),
     );
   }
 
-  List<Widget> _cards(BuildContext context) {
-    return movies.map((movie) {
-      return Container(
-        margin: EdgeInsets.only(right: 25.0),
-        child: Column(
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15.0),
-              child: FadeInImage(
-                image: NetworkImage(movie.getPosterImage()),
-                placeholder: AssetImage('assets/img/no-image.jpg'),
-                fit: BoxFit.cover,
-                height: 150.0,
-              ),
+  Widget _card(BuildContext context, Movie movie) {
+    return Container(
+      margin: EdgeInsets.only(right: 25.0),
+      child: Column(
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15.0),
+            child: FadeInImage(
+              image: NetworkImage(movie.getPosterImage()),
+              placeholder: AssetImage('assets/img/no-image.jpg'),
+              fit: BoxFit.cover,
+              height: 150.0,
             ),
-            SizedBox(height: 10.0),
-            Text(
-              movie.title,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.caption,
-            ),
-          ],
-        ),
-      );
-    }).toList();
+          ),
+          SizedBox(height: 10.0),
+          Text(
+            movie.title,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.caption,
+          ),
+        ],
+      ),
+    );
   }
+
+  // List<Widget> _cards(BuildContext context) {
+  //   return movies.map((movie) {
+  //     return Container(
+  //       margin: EdgeInsets.only(right: 25.0),
+  //       child: Column(
+  //         children: <Widget>[
+  //           ClipRRect(
+  //             borderRadius: BorderRadius.circular(15.0),
+  //             child: FadeInImage(
+  //               image: NetworkImage(movie.getPosterImage()),
+  //               placeholder: AssetImage('assets/img/no-image.jpg'),
+  //               fit: BoxFit.cover,
+  //               height: 150.0,
+  //             ),
+  //           ),
+  //           SizedBox(height: 10.0),
+  //           Text(
+  //             movie.title,
+  //             overflow: TextOverflow.ellipsis,
+  //             style: Theme.of(context).textTheme.caption,
+  //           ),
+  //         ],
+  //       ),
+  //     );
+  //   }).toList();
+  // }
 }
