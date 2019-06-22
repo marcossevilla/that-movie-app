@@ -1,6 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'package:that_movie_app/src/models/actors_model.dart';
 import 'package:that_movie_app/src/models/movie_model.dart';
+import 'package:that_movie_app/src/providers/movie_provider.dart';
 
+import 'dart:io' show Platform;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MovieDetail extends StatelessWidget {
@@ -19,6 +22,7 @@ class MovieDetail extends StatelessWidget {
               ),
               _postTitle(context, movie),
               _overview(movie),
+              _createCast(movie),
             ]),
           ),
         ],
@@ -101,6 +105,64 @@ class MovieDetail extends StatelessWidget {
       child: Text(
         movie.overview,
         textAlign: TextAlign.left,
+      ),
+    );
+  }
+
+  Widget _createCast(Movie movie) {
+    final movieProvider = new MovieProvider();
+
+    return FutureBuilder(
+      future: movieProvider.getCast(movie.id.toString()),
+      builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+        if (snapshot.hasData) {
+          return _createCastPageView(snapshot.data);
+        } else {
+          return Center(
+            child: Platform.isAndroid
+                ? CircularProgressIndicator()
+                : CupertinoActivityIndicator(),
+          );
+        }
+      },
+    );
+  }
+
+  Widget _createCastPageView(List<Actor> actors) {
+    return SizedBox(
+      height: 200.0,
+      child: PageView.builder(
+        pageSnapping: false,
+        controller: PageController(
+          initialPage: 1,
+          viewportFraction: 0.3,
+        ),
+        itemCount: actors.length,
+        itemBuilder: (context, i) => _actorCard(actors[i]),
+      ),
+    );
+  }
+
+  Widget _actorCard(Actor actor) {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: FadeInImage(
+              image: NetworkImage(actor.getPicture()),
+              placeholder: AssetImage('assets/img/no-image.jpg'),
+              height: 150.0,
+              width: 100.0,
+              fit: BoxFit.cover,
+            ),
+          ),
+          SizedBox(height: 15.0),
+          Text(
+            actor.name,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
       ),
     );
   }

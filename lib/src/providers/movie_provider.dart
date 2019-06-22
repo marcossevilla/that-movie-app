@@ -1,10 +1,10 @@
-import 'package:http/http.dart' as http;
 import 'package:that_movie_app/src/models/actors_model.dart';
-
 import 'package:that_movie_app/src/models/movie_model.dart';
 
-import 'dart:async';
+import 'package:http/http.dart' as http;
+
 import 'dart:convert';
+import 'dart:async';
 
 class MovieProvider {
   String _apiKey = '02e90984ead670df65a8c61a52e8ff6d';
@@ -67,7 +67,7 @@ class MovieProvider {
   }
 
   Future<List<Actor>> getCast(String movieId) async {
-    final url = Uri.https(_url, '3/movie/{$movieId}/credits', {
+    final url = Uri.https(_url, '3/movie/$movieId/credits', {
       'api_key': _apiKey,
       'language': _language,
     });

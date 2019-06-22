@@ -2,6 +2,7 @@ import 'package:that_movie_app/src/providers/movie_provider.dart';
 import 'package:that_movie_app/src/widgets/card_swiper.dart';
 
 import 'dart:io' show Platform;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:that_movie_app/src/widgets/movie_horizontal.dart';
 
@@ -49,11 +50,9 @@ class HomePage extends StatelessWidget {
           return Container(
             height: 400.0,
             child: Center(
-              child: CircularProgressIndicator(
-                value: null,
-                strokeWidth: 5.0,
-              ),
-            ),
+                child: Platform.isAndroid
+                    ? CircularProgressIndicator()
+                    : CupertinoActivityIndicator()),
           );
         }
       },
@@ -82,10 +81,9 @@ class HomePage extends StatelessWidget {
               } else {
                 return Container(
                   child: Center(
-                    child: CircularProgressIndicator(
-                      value: null,
-                      strokeWidth: 5.0,
-                    ),
+                    child: Platform.isAndroid
+                        ? CircularProgressIndicator()
+                        : CupertinoActivityIndicator(),
                   ),
                 );
               }
