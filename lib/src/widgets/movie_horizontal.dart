@@ -25,7 +25,7 @@ class MovieHorizontal extends StatelessWidget {
     });
 
     return Container(
-      height: _screenSize.height * 0.27,
+      height: _screenSize.height * 0.25,
       child: PageView.builder(
         pageSnapping: false,
         controller: _pageController,
@@ -37,12 +37,14 @@ class MovieHorizontal extends StatelessWidget {
   }
 
   Widget _card(BuildContext context, Movie movie) {
+    movie.uniqueId = '${movie.id}-popular';
+
     final card = Container(
       margin: EdgeInsets.only(right: 25.0),
       child: Column(
         children: <Widget>[
           Hero(
-            tag: movie.id,
+            tag: movie.uniqueId,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15.0),
               child: FadeInImage(

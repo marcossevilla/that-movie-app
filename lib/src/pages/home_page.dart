@@ -31,7 +31,6 @@ class HomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               _cardSwiper(),
-              SizedBox(height: 5.0),
               _footer(context),
             ],
           ),

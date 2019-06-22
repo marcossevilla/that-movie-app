@@ -67,9 +67,7 @@ class MovieDetail extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
-            width: 30.0,
-          ),
+          SizedBox(width: 30.0),
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

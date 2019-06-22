@@ -14,6 +14,9 @@ class Movies {
 }
 
 class Movie {
+  // app attribute
+  String uniqueId;
+
   int voteCount;
   int id;
   bool video;
