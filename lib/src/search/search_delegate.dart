@@ -1,7 +1,13 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:that_movie_app/src/models/movie_model.dart';
+import 'package:that_movie_app/src/providers/movie_provider.dart';
 
 class DataSeach extends SearchDelegate {
   String selected = '';
+  final movieProvider = new MovieProvider();
 
   final movies = [
     'Spider-Man: Homecoming',
@@ -54,23 +60,39 @@ class DataSeach extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final listSuggested = (query.isEmpty)
-        ? recentMovies
-        : movies
-            .where((p) => p.toLowerCase().contains(query.toLowerCase()))
-            .toList();
+    if (query.isEmpty) return Container();
 
-    return ListView.builder(
-      itemCount: listSuggested.length,
-      itemBuilder: (context, i) {
-        return ListTile(
-          leading: Icon(Icons.movie),
-          title: Text(listSuggested[i]),
-          onTap: () {
-            selected = listSuggested[i];
-            showResults(context);
-          },
-        );
+    return FutureBuilder(
+      future: movieProvider.searchMovie(query),
+      builder: (BuildContext context, AsyncSnapshot<List<Movie>> snapshot) {
+        if (snapshot.hasData) {
+          final movies = snapshot.data;
+          return ListView(
+            children: movies.map((movie) {
+              return ListTile(
+                leading: FadeInImage(
+                  image: NetworkImage(movie.getPosterImage()),
+                  placeholder: AssetImage('assets/img/no-image.jpg'),
+                  width: 50.0,
+                  fit: BoxFit.contain,
+                ),
+                title: Text(movie.title),
+                subtitle: Text(movie.originalTitle),
+                onTap: () {
+                  close(context, null);
+                  movie.uniqueId = '';
+                  Navigator.pushNamed(context, 'detail', arguments: movie);
+                },
+              );
+            }).toList(),
+          );
+        } else {
+          return Center(
+            child: Platform.isAndroid
+                ? CircularProgressIndicator()
+                : CupertinoActivityIndicator(),
+          );
+        }
       },
     );
   }
