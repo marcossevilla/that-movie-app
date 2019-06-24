@@ -102,7 +102,7 @@ class MovieDetail extends StatelessWidget {
 
   Widget _overview(Movie movie) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 20.0),
+      padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 15.0),
       child: Text(
         movie.overview,
         textAlign: TextAlign.left,
@@ -132,10 +132,8 @@ class MovieDetail extends StatelessWidget {
   Widget _createCastPageView(List<Actor> actors) {
     return Column(
       children: <Widget>[
-        Text('Cast'),
-        SizedBox(height: 15.0),
         SizedBox(
-          height: 200.0,
+          height: 180.0,
           child: PageView.builder(
             pageSnapping: false,
             controller: PageController(
@@ -159,17 +157,16 @@ class MovieDetail extends StatelessWidget {
             child: FadeInImage(
               image: NetworkImage(actor.getPicture()),
               placeholder: AssetImage('assets/img/no-image.jpg'),
-              height: 150.0,
+              height: 140.0,
               width: 100.0,
               fit: BoxFit.cover,
             ),
           ),
-          SizedBox(height: 15.0),
+          SizedBox(height: 8.0),
           Text(
             actor.name,
             overflow: TextOverflow.ellipsis,
           ),
-          SizedBox(height: 2.0),
           Text(
             actor.character,
             overflow: TextOverflow.ellipsis,

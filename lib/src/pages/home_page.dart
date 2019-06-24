@@ -1,10 +1,12 @@
 import 'package:that_movie_app/src/providers/movie_provider.dart';
+import 'package:that_movie_app/src/search/search_delegate.dart';
 import 'package:that_movie_app/src/widgets/card_swiper.dart';
+import 'package:that_movie_app/src/widgets/movie_horizontal.dart';
 
 import 'dart:io' show Platform;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:that_movie_app/src/widgets/movie_horizontal.dart';
 
 class HomePage extends StatelessWidget {
   final movieProvider = new MovieProvider();
@@ -22,7 +24,11 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              showSearch(context: context, delegate: );
+              showSearch(
+                context: context,
+                delegate: DataSeach(),
+                // query: 'Hello',
+              );
             },
           ),
         ],
