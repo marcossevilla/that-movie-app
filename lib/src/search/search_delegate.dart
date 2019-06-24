@@ -9,22 +9,6 @@ class DataSeach extends SearchDelegate {
   String selected = '';
   final movieProvider = new MovieProvider();
 
-  final movies = [
-    'Spider-Man: Homecoming',
-    'Aquaman',
-    'Shazam!',
-    'Iron Man',
-    'Captain America: The Winter Soldier',
-    'Spider-Man: Far from Home',
-    'Avengers: Endgame',
-    'Avengers: Infinity War',
-  ];
-
-  final recentMovies = [
-    'Spider-Man: Far from Home',
-    'Avengers: Endgame',
-  ];
-
   @override
   List<Widget> buildActions(BuildContext context) {
     return [

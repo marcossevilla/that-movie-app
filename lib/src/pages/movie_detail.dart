@@ -133,7 +133,7 @@ class MovieDetail extends StatelessWidget {
     return Column(
       children: <Widget>[
         SizedBox(
-          height: 180.0,
+          height: 200.0,
           child: PageView.builder(
             pageSnapping: false,
             controller: PageController(

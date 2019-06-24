@@ -38,6 +38,7 @@ class HomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
+              SizedBox(height: 5.0),
               _cardSwiper(),
               _footer(context),
             ],
@@ -73,10 +74,10 @@ class HomePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(left: 25.0),
+            padding: EdgeInsets.only(left: 25.0, top: 20.0),
             child: Text('Popular', style: Theme.of(context).textTheme.subhead),
           ),
-          SizedBox(height: 15.0),
+          SizedBox(height: 20.0),
           StreamBuilder(
             stream: movieProvider.popularStream,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
