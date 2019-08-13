@@ -1,12 +1,11 @@
-import 'package:that_movie_app/src/providers/movie_provider.dart';
-import 'package:that_movie_app/src/search/search_delegate.dart';
-import 'package:that_movie_app/src/widgets/card_swiper.dart';
-import 'package:that_movie_app/src/widgets/movie_horizontal.dart';
-
 import 'dart:io' show Platform;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:that_movie_app/src/providers/movie_provider.dart';
+import 'package:that_movie_app/src/search/search_delegate.dart';
+import 'package:that_movie_app/src/widgets/movie_horizontal.dart';
 
 class HomePage extends StatelessWidget {
   final movieProvider = new MovieProvider();
@@ -17,7 +16,13 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Movies on Theaters'),
+        title: Text(
+          'That Movie', 
+          style: TextStyle(
+            // fontWeight: FontWeight.bold, 
+            fontSize: 22.0
+          )
+        ),
         centerTitle: Platform.isAndroid ? false : true,
         // backgroundColor: Colors.redAccent[700],
         actions: <Widget>[
@@ -27,7 +32,7 @@ class HomePage extends StatelessWidget {
               showSearch(
                 context: context,
                 delegate: DataSeach(),
-                // query: 'Hello',
+                // query: 'Type a movie...',
               );
             },
           ),
@@ -35,11 +40,29 @@ class HomePage extends StatelessWidget {
       ),
       body: SafeArea(
         child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          child: ListView(
             children: <Widget>[
-              SizedBox(height: 5.0),
-              _cardSwiper(),
+              Container(
+                padding: EdgeInsets.all(18.0),
+                child: Text(
+                  'Movies on Theaters',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold, 
+                    fontSize: 20.0
+                  )
+                )
+              ),
+              _onTheaters(),
+              Container(
+                padding: EdgeInsets.all(18.0),
+                child: Text(
+                  'Popular Movies', 
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold, 
+                    fontSize: 20.0
+                  )
+                )
+              ),
               _footer(context),
             ],
           ),
@@ -48,19 +71,20 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _cardSwiper() {
+  Widget _onTheaters() {
     return FutureBuilder(
       future: movieProvider.getNowPlaying(),
       builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
         if (snapshot.hasData) {
-          return CardSwiper(movies: snapshot.data);
+          return MovieHorizontal(movies: snapshot.data);
         } else {
           return Container(
             height: 400.0,
             child: Center(
                 child: Platform.isAndroid
                     ? CircularProgressIndicator()
-                    : CupertinoActivityIndicator()),
+                    : CupertinoActivityIndicator()
+            ),
           );
         }
       },
@@ -68,37 +92,24 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _footer(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(left: 25.0, top: 20.0),
-            child: Text('Popular', style: Theme.of(context).textTheme.subhead),
-          ),
-          SizedBox(height: 20.0),
-          StreamBuilder(
-            stream: movieProvider.popularStream,
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                return MovieHorizontal(
-                  movies: snapshot.data,
-                  nextPage: movieProvider.getPopular,
-                );
-              } else {
-                return Container(
-                  child: Center(
-                    child: Platform.isAndroid
-                        ? CircularProgressIndicator()
-                        : CupertinoActivityIndicator(),
-                  ),
-                );
-              }
-            },
-          ),
-        ],
-      ),
+    return StreamBuilder(
+      stream: movieProvider.popularStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          return MovieHorizontal(
+            movies: snapshot.data,
+            nextPage: movieProvider.getPopular,
+          );
+        } else {
+          return Container(
+            child: Center(
+              child: Platform.isAndroid
+                  ? CircularProgressIndicator()
+                  : CupertinoActivityIndicator(),
+            ),
+          );
+        }
+      },
     );
   }
 }

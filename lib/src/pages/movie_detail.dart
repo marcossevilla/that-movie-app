@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'dart:io' show Platform;
+
 import 'package:that_movie_app/src/models/actors_model.dart';
 import 'package:that_movie_app/src/models/movie_model.dart';
 import 'package:that_movie_app/src/providers/movie_provider.dart';
-
-import 'dart:io' show Platform;
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class MovieDetail extends StatelessWidget {
   @override
@@ -33,7 +33,7 @@ class MovieDetail extends StatelessWidget {
   Widget _createAppBar(Movie movie) {
     return SliverAppBar(
       elevation: 2.0,
-      backgroundColor: Colors.redAccent,
+      backgroundColor: Colors.cyanAccent,
       expandedHeight: 200.0,
       floating: false,
       pinned: true,
@@ -57,14 +57,11 @@ class MovieDetail extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
         children: <Widget>[
-          Hero(
-            tag: movie.id,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15.0),
-              child: Image(
-                image: NetworkImage(movie.getPosterImage()),
-                height: 150.0,
-              ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15.0),
+            child: Image(
+              image: NetworkImage(movie.getPosterImage()),
+              height: 150.0,
             ),
           ),
           SizedBox(width: 30.0),
