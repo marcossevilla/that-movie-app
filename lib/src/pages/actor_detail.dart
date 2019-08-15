@@ -37,7 +37,7 @@ class _ActorDetailState extends State<ActorDetail> {
 
   Widget _buildPhoto(BuildContext context, Actor actor) {
     return Container(
-      padding: EdgeInsets.only(top: 20.0),
+      padding: EdgeInsets.symmetric(vertical: 20.0),
       child: FadeInImage(
         placeholder: AssetImage('assets/no-image.jpg'),
         image: NetworkImage(actor.getPicture()),

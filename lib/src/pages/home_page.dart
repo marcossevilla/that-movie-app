@@ -68,6 +68,10 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.pan_tool),
+        onPressed: () => Navigator.of(context).pushNamed('snap'),
+      ),
     );
   }
 

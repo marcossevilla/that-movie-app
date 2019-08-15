@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:that_movie_app/src/pages/home_page.dart';
 import 'package:that_movie_app/src/pages/movie_detail.dart';
 import 'package:that_movie_app/src/pages/actor_detail.dart';
+import 'package:that_movie_app/src/pages/snap.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         '/': (BuildContext context) => HomePage(),
         'detail': (BuildContext context) => MovieDetail(),
         'actor': (BuildContext context) => ActorDetail(),
+        'snap': (BuildContext context) => Snap(),
       },
     );
   }
