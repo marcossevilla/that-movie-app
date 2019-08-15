@@ -4,11 +4,21 @@ import 'dart:io' show Platform;
 
 import 'package:that_movie_app/src/models/actors_model.dart';
 import 'package:that_movie_app/src/models/movie_model.dart';
+import 'package:that_movie_app/src/providers/actor_provider.dart';
 import 'package:that_movie_app/src/providers/movie_provider.dart';
 
-class MovieDetail extends StatelessWidget {
+class MovieDetail extends StatefulWidget {
+
+  @override
+  _MovieDetailState createState() => _MovieDetailState();
+}
+
+class _MovieDetailState extends State<MovieDetail> {
+  ActorProvider actorProvider;
+
   @override
   Widget build(BuildContext context) {
+    
     final Movie movie = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
@@ -33,7 +43,7 @@ class MovieDetail extends StatelessWidget {
   Widget _createAppBar(Movie movie) {
     return SliverAppBar(
       elevation: 2.0,
-      backgroundColor: Colors.cyanAccent,
+      backgroundColor: Colors.cyan,
       expandedHeight: 200.0,
       floating: false,
       pinned: true,
@@ -44,10 +54,10 @@ class MovieDetail extends StatelessWidget {
           style: TextStyle(color: Colors.white, fontSize: 15.0),
         ),
         background: FadeInImage(
-            image: NetworkImage(movie.getBackgroundImage()),
-            placeholder: AssetImage('assets/img/no-image.jpg'),
-            fadeInDuration: Duration(microseconds: 100),
-            fit: BoxFit.cover),
+          image: NetworkImage(movie.getBackgroundImage()),
+          placeholder: AssetImage('assets/img/no-image.jpg'),
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
@@ -108,25 +118,26 @@ class MovieDetail extends StatelessWidget {
   }
 
   Widget _createCast(Movie movie) {
+    
     final movieProvider = new MovieProvider();
 
     return FutureBuilder(
       future: movieProvider.getCast(movie.id.toString()),
       builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
         if (snapshot.hasData) {
-          return _createCastPageView(snapshot.data);
+          return _createCastPageView(context, snapshot.data);
         } else {
           return Center(
             child: Platform.isAndroid
-                ? CircularProgressIndicator()
-                : CupertinoActivityIndicator(),
+              ? CircularProgressIndicator()
+              : CupertinoActivityIndicator(),
           );
         }
       },
     );
   }
 
-  Widget _createCastPageView(List<Actor> actors) {
+  Widget _createCastPageView(BuildContext context, List<Actor> actors) {
     return Column(
       children: <Widget>[
         SizedBox(
@@ -138,38 +149,42 @@ class MovieDetail extends StatelessWidget {
               viewportFraction: 0.3,
             ),
             itemCount: actors.length,
-            itemBuilder: (context, i) => _actorCard(actors[i]),
+            itemBuilder: (context, i) => _actorCard(context, actors[i]),
           ),
         ),
       ],
     );
   }
 
-  Widget _actorCard(Actor actor) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: FadeInImage(
-              image: NetworkImage(actor.getPicture()),
-              placeholder: AssetImage('assets/img/no-image.jpg'),
-              height: 140.0,
-              width: 100.0,
-              fit: BoxFit.cover,
+  Widget _actorCard(BuildContext context, Actor actor) {
+    return GestureDetector(
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: FadeInImage(
+                image: NetworkImage(actor.getPicture()),
+                placeholder: AssetImage('assets/img/no-image.jpg'),
+                height: 140.0,
+                width: 100.0,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          SizedBox(height: 8.0),
-          Text(
-            actor.name,
-            overflow: TextOverflow.ellipsis,
-          ),
-          Text(
-            actor.character,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
+            SizedBox(height: 8.0),
+            Text(
+              actor.name,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Text(
+              actor.character,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
+      onTap: () => Navigator.pushNamed(context, 'actor', arguments: actor),
     );
+
   }
 }

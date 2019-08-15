@@ -45,12 +45,20 @@ class MovieHorizontal extends StatelessWidget {
       margin: EdgeInsets.only(right: 25.0),
       child: Column(
         children: <Widget>[
-          FadeInImage(
-            image: NetworkImage(movie.getPosterImage()),
-            placeholder: AssetImage('assets/img/no-image.jpg'),
-            fit: BoxFit.cover,
-            height: size.height * 0.3,
-            width: size.width * 0.7,
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Theme.of(context).primaryColor,
+                width: 2.0
+              )
+            ),
+            child: FadeInImage(
+              image: NetworkImage(movie.getPosterImage()),
+              placeholder: AssetImage('assets/img/no-image.jpg'),
+              fit: BoxFit.cover,
+              height: size.height * 0.3,
+              width: size.width * 0.7,
+            ),
           ),
           SizedBox(height: 10.0),
           Text(
@@ -60,6 +68,8 @@ class MovieHorizontal extends StatelessWidget {
           ),
         ],
       ),
+
+      
     );
 
     return GestureDetector(

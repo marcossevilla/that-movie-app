@@ -1,12 +1,13 @@
-import 'package:that_movie_app/src/models/actors_model.dart';
-import 'package:that_movie_app/src/models/movie_model.dart';
+import 'dart:async';
+import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import 'dart:convert';
-import 'dart:async';
+import 'package:that_movie_app/src/models/actors_model.dart';
+import 'package:that_movie_app/src/models/movie_model.dart';
 
 class MovieProvider {
+  
   String _apiKey = '02e90984ead670df65a8c61a52e8ff6d';
   String _url = 'api.themoviedb.org';
   String _language = 'en-US';
@@ -27,23 +28,29 @@ class MovieProvider {
   }
 
   Future<List<Movie>> _processResponse(Uri url) async {
+    
     final res = await http.get(url);
     final decodedData = json.decode(res.body);
 
     final movies = new Movies.fromJsonList(decodedData['results']);
 
     return movies.items;
+
   }
 
   Future<List<Movie>> getNowPlaying() async {
+    
     final url = Uri.https(_url, '3/movie/now_playing', {
       'api_key': _apiKey,
       'language': _language,
     });
+    
     return await _processResponse(url);
+
   }
 
   Future<List<Movie>> getPopular() async {
+    
     if (_loading) return [];
     _loading = true;
     _popularPage++;
@@ -64,9 +71,11 @@ class MovieProvider {
     _loading = false;
 
     return res;
+
   }
 
   Future<List<Actor>> getCast(String movieId) async {
+    
     final url = Uri.https(_url, '3/movie/$movieId/credits', {
       'api_key': _apiKey,
       'language': _language,
@@ -78,14 +87,18 @@ class MovieProvider {
     final cast = new Cast.fromJsonList(decodedData['cast']);
 
     return cast.actors;
+
   }
 
   Future<List<Movie>> searchMovie(String query) async {
+    
     final url = Uri.https(_url, '3/search/movie', {
       'api_key': _apiKey,
       'language': _language,
       'query': query,
     });
+    
     return await _processResponse(url);
+    
   }
 }

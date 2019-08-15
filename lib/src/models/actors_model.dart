@@ -21,6 +21,13 @@ class Actor {
   int order;
   String profilePath;
 
+  // * for the actor detail
+  String birthDate;
+  String biography;
+  double popularity;
+  String placeOfBirth;
+  String knownForDepartment;
+
   Actor({
     castId,
     character,
@@ -30,6 +37,11 @@ class Actor {
     name,
     order,
     profilePath,
+    birthDate,
+    biography,
+    popularity,
+    placeOfBirth,
+    knownForDepartment,
   });
 
   Actor.fromJsonMap(Map<String, dynamic> json) {
@@ -41,6 +53,11 @@ class Actor {
     name = json['name'];
     order = json['order'];
     profilePath = json['profile_path'];
+    birthDate = json['birthday'];
+    biography = json['biography'];
+    popularity = json['popularity'];
+    placeOfBirth = json['placeOfBirth'];
+    knownForDepartment = json['knownForDepartment'];
   }
 
   getPicture() {

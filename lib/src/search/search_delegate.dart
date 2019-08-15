@@ -32,19 +32,16 @@ class DataSeach extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Center(
-      child: Container(
-        height: 100.0,
-        width: 100.0,
-        color: Colors.redAccent,
-        child: Text(selected),
-      ),
-    );
+    return theMethodToDRY(context, '');
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    if (query.isEmpty) return Container();
+    return theMethodToDRY(context, 'No movies searched!');
+  }
+
+  Widget theMethodToDRY(BuildContext context, String message) {
+    if (query.isEmpty) return Center(child: Container(child: Text(message),));
 
     return FutureBuilder(
       future: movieProvider.searchMovie(query),
